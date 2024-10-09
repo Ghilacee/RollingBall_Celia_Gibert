@@ -9,7 +9,11 @@ public class Prueba : MonoBehaviour
     [SerializeField] float fuerza = 20f;
     [SerializeField] float direccion = 20f;
     [SerializeField] Vector3 movimiento;
-   
+    float moveHorizontal;
+    float moveVertical;
+    [SerializeField] int puntos = 0;
+
+
     Rigidbody rb;
 
     // Start is called before the first frame update
@@ -26,15 +30,30 @@ public class Prueba : MonoBehaviour
             rb.AddForce( movimiento* fuerza, ForceMode.Impulse);
 
         }
-       
-        float moveHorizontal = Input.GetAxisRaw("Horizontal"); 
-        float moveVertical = Input.GetAxisRaw("Vertical"); 
-        rb.AddForce(new Vector3(moveHorizontal, 0,moveVertical).normalized * fuerza , ForceMode.Force);
+
+        moveHorizontal = Input.GetAxisRaw("Horizontal"); 
+        moveVertical = Input.GetAxisRaw("Vertical"); 
+        //rb.AddForce(new Vector3(moveHorizontal, 0,moveVertical).normalized * fuerza , ForceMode.Force);
 
 
-      //rb.AddForce ( Vector3 * fuerza,  ForceMode.TipoF );
+   
 
 
+
+    }
+    void FixedUpdate()
+    {
+        rb.AddForce(new Vector3(moveHorizontal, 0, moveVertical).normalized * fuerza, ForceMode.Force);
+
+
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Coleccionable"))
+        {
+            puntos += 10;
+
+        }
 
     }
 }

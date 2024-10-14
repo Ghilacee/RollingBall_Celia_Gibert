@@ -12,6 +12,7 @@ public class Prueba : MonoBehaviour
     float moveHorizontal;
     float moveVertical;
     [SerializeField] int puntos = 0;
+    [SerializeField] private float distanciaRaycast;
 
 
     Rigidbody rb;
@@ -47,6 +48,13 @@ public class Prueba : MonoBehaviour
 
 
     }
+    private bool DetectarSuelo()
+    {
+       bool resultado =  Physics.Raycast(transform.position, Vector3.down , distanciaRaycast);
+       Debug.DrawRay(transform.position, Vector3.down, Color.red, 2f);
+       return resultado; 
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Coleccionable"))
